@@ -1,0 +1,32 @@
+.todoWrap {
+	min-width: 200px;
+	border: 1px solid black;
+	padding: 20px;
+	max-width: 350px;
+	margin: 30px 60px;
+	background: #d6e2ef;
+	border-radius: 5px;
+}
+
+.taskList li {
+	list-style: none;
+	display: flex;
+	gap: 10px;
+}
+
+.taskList span {
+	flex: 1 1 auto;
+}
+
+.taskList {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.wrapForInputBtn {
+	display: flex;
+	margin: 0 auto;
+	width: 185px;
+	height: 40px;
+}
