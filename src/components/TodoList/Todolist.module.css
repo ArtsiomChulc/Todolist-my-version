@@ -30,3 +30,23 @@
 	width: 185px;
 	height: 40px;
 }
+
+.errorText {
+	color: red;
+
+}
+
+.btns {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	border: 1px solid black;
+	padding: 20px;
+	border-radius: 10px;
+	background-color: #c6cbd0;
+}
+
+.btns button {
+	padding: 4px 10px;
+	border-radius: 5px;
+}
