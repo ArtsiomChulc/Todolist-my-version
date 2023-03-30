@@ -14,18 +14,37 @@ export type TasksType = {
   tasks: TaskType[]
 }
 
+export type FilterValueTaskType = 'all' | 'active' | 'completed'
+
 
 function App() {
   const nameTodo = 'What to learn?'
   const nameBtn = 'Add'
 
   const [error, setError] = useState(false)
+  const [filter, setFilter] = useState<FilterValueTaskType>('all')
 
   const [tasks, setTasks] = useState<Array<TaskType>>([
     { id: v1(), title: "HTML&CSS", isDone: false },
     { id: v1(), title: "JS", isDone: false },
     { id: v1(), title: "ReactJS", isDone: false }
   ])
+
+  const changeFilteredTasks = (value: FilterValueTaskType) => {
+    setFilter(value)
+  }
+
+  const filteredTasks = () => {
+    let filteredTasksArray = tasks
+    switch (filter) {
+      case 'active':
+        return filteredTasksArray = tasks.filter(t => t.isDone === false)
+      case 'completed':
+        return filteredTasksArray = tasks.filter(t => t.isDone === true)
+      default:
+        return filteredTasksArray
+    }
+  }
 
   const addTask = (valueInput: string) => {
     const valueInputTrim = valueInput.trim()
@@ -54,7 +73,8 @@ function App() {
 
   return (
     <div className="App">
-      <TodoList tasks={tasks}
+      <TodoList
+        tasks={filteredTasks()}
         nameTodo={nameTodo}
         nameBtn={nameBtn}
         addTask={addTask}
@@ -62,6 +82,8 @@ function App() {
         setError={setError}
         removeTask={removeTask}
         changeStatusTask={changeStatusTask}
+        changeFilteredTasks={changeFilteredTasks}
+        filter={filter}
       />
     </div>
   );

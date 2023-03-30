@@ -6,6 +6,9 @@
 	margin: 30px 60px;
 	background: #d6e2ef;
 	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	min-height: 300px;
 }
 
 .taskList li {
@@ -22,6 +25,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	flex: 1 1 auto;
 }
 
 .wrapForInputBtn {
@@ -44,9 +48,38 @@
 	padding: 20px;
 	border-radius: 10px;
 	background-color: #c6cbd0;
+
 }
 
-.btns button {
+.button {
 	padding: 4px 10px;
 	border-radius: 5px;
+}
+
+.checked {
+	text-decoration: line-through;
+	opacity: 0.5;
+}
+
+.activeColor {
+	background: #f65a3e;
+}
+
+.completedColor {
+	background: #a0c6ee;
+}
+
+.buttonAllColor {
+	border: 2px solid transparent;
+	background: #9587d8;
+}
+
+.buttonCompColor {
+	border: 2px solid transparent;
+	background: #9587d8;
+}
+
+.buttonActiveColor {
+	border: 2px solid transparent;
+	background: #9587d8;
 }

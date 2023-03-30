@@ -11,6 +11,8 @@ type ButtonTypeProps = {
 export const Button = (props: ButtonTypeProps) => {
 	const [valueInput, setValueInput] = useState('')
 
+	const styleInputError = `${s.input} ${props.error ? s.inputError : ''}`
+
 	const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		setValueInput(e.currentTarget.value)
 		props.error && props.setError(!props.error)
@@ -32,7 +34,7 @@ export const Button = (props: ButtonTypeProps) => {
 
 	return (
 		<>
-			<input onKeyPress={onKeyPressHandler} value={valueInput} onChange={onChangeHandler} />
+			<input className={styleInputError} onKeyPress={onKeyPressHandler} value={valueInput} onChange={onChangeHandler} />
 			<button disabled={valueInput.length < 3} onClick={onClickHandler} className={s.btn}>{props.nameBtn}</button>
 		</>
 	)
