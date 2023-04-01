@@ -1,35 +1,38 @@
 import React, { ChangeEvent } from 'react';
 import { FilterValueTaskType, TaskType } from '../../App';
-import { Button } from './ButtonInput/ButtonInput'
+import { ButtonInput } from './ButtonInput/ButtonInput'
 import s from './Todolist.module.css'
 
 type TodoListTypeProps = {
 	tasks: TaskType[]
 	nameTodo: string
 	nameBtn: string
-	addTask: (valueInput: string) => void
-	error: boolean
-	setError: (x: boolean) => void
-	removeTask: (id: string) => void
-	changeStatusTask: (taskId: string, newIsDone: boolean) => void
-	changeFilteredTasks: (value: FilterValueTaskType) => void
+	addTask: (valueInput: string, todoListId: string) => void
+	error: string
+	setError: (x: string) => void
+	removeTask: (id: string, todoListId: string) => void
+	changeStatusTask: (taskId: string, newIsDone: boolean, todoListId: string) => void
+	changeFilteredTasks: (value: FilterValueTaskType, todoListId: string) => void
 	filter: FilterValueTaskType
+	id: string
+	removeTodoList: (todoListId: string) => void
 }
 
 export const TodoList = (props: TodoListTypeProps) => {
 
+
 	const taskList = props.tasks.map(task => {
-		const styleChecked = `${task.isDone ? s.checked : ''}`
+		const styleChecked = `${s.textTask} ${task.isDone ? s.checked : ''}`
 		const onClickHandler = () => {
-			props.removeTask(task.id)
+			props.removeTask(task.id, props.id)
 		}
 		const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 			let newIsDone = e.currentTarget.checked
-			props.changeStatusTask(task.id, newIsDone)
+			props.changeStatusTask(task.id, newIsDone, props.id)
 		}
 		return (
 			<li key={task.id}>
-				<input onChange={onChangeHandler} type="checkbox" checked={task.isDone} />
+				<input className={s.checkBox} onChange={onChangeHandler} type="checkbox" checked={task.isDone} />
 				<span className={styleChecked}>{task.title}</span>
 				<button onClick={onClickHandler}>✖️</button>
 			</li>
@@ -37,17 +40,22 @@ export const TodoList = (props: TodoListTypeProps) => {
 	})
 
 	const onClickFilteredTasksAll = () => {
-		props.changeFilteredTasks('all')
+		props.changeFilteredTasks('all', props.id)
 	}
 	const onClickFilteredTasksActive = () => {
-		props.changeFilteredTasks('active')
+		props.changeFilteredTasks('active', props.id)
 	}
 	const onClickFilteredTasksCompleted = () => {
-		props.changeFilteredTasks('completed')
+		props.changeFilteredTasks('completed', props.id)
 	}
 
 	const styleForWrapFilter = `${s.todoWrap} ${props.filter === 'active' ? s.activeColor :
 		props.filter === 'completed' ? s.completedColor : ''}`
+
+	const removeTodo = () => {
+		props.removeTodoList(props.id)
+	}
+
 
 	const styleForBtnsFilterAll = `${s.button} ${props.filter === 'all' ? s.buttonAllColor : ''}`
 	const styleForBtnsFilterCompleted = `${s.button} ${props.filter === 'completed' ? s.buttonCompColor : ''}`
@@ -55,11 +63,14 @@ export const TodoList = (props: TodoListTypeProps) => {
 
 	return (
 		<div className={styleForWrapFilter}>
-			<h2>{props.nameTodo}</h2>
-			<div className={s.wrapForInputBtn}>
-				<Button addTask={props.addTask} nameBtn={props.nameBtn} setError={props.setError} error={props.error} />
+			<div className={s.titleTodo}>
+				{props.nameTodo}
+				<button onClick={removeTodo}>Delete</button>
 			</div>
-			{props.error && <span className={s.errorText}>Введите текст!!!</span>}
+			<div className={s.wrapForInputBtn}>
+				<ButtonInput id={props.id} addTask={props.addTask} nameBtn={props.nameBtn} setError={props.setError} error={props.error} />
+			</div>
+			{props.error && <span className={s.errorText}>{props.error}</span>}
 
 			<ul className={s.taskList}>
 				{taskList}
