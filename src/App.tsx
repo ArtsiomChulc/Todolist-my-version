@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
-import './App.css';
+import s from './App.module.css';
+import { ButtonInput } from './components/TodoList/ButtonInput/ButtonInput';
 import { TodoList } from './components/TodoList/TodoList';
 
 
@@ -27,7 +28,7 @@ function App() {
   // const nameTodo = 'What to learn?'
   const nameBtn = 'Add'
 
-  const [error, setError] = useState('')
+  // const [error, setError] = useState('')
 
   const todoListsId1 = v1()
   const todoListsId2 = v1()
@@ -73,6 +74,7 @@ function App() {
 
   }
 
+
   const removeTask = (taskId: string, todoListId: string) => {
     const tasks = tasksObj[todoListId]
     const filteredTasks = tasks.filter(task => task.id !== taskId)
@@ -89,55 +91,57 @@ function App() {
     }
   }
 
+  const addTodoList = (valueInput: string) => {
+    const newTodo: TodoListsType = { id: v1(), title: valueInput, filter: "all" }
+    setTodoLists([newTodo, ...todoLists])
+    setTasks({
+      ...tasksObj,
+      [newTodo.id]: []
+    })
+  }
+
   const removeTodoList = (todoListId: string) => {
     let filterForRemoveTD = todoLists.filter(tl => tl.id !== todoListId)
     setTodoLists(filterForRemoveTD)
   }
 
   return (
-    <div className="App">
-      {todoLists.map(tl => {
-        const filteredTasks = () => {
-          let filteredTasksArray = tasksObj[tl.id]
-          switch (tl.filter) {
-            case 'active':
-              return filteredTasksArray = filteredTasksArray.filter(t => t.isDone === false)
-            case 'completed':
-              return filteredTasksArray = filteredTasksArray.filter(t => t.isDone === true)
-            default:
-              return filteredTasksArray
+    <div className={s.app}>
+      <div className={s.addTodoListInput}>
+        <ButtonInput addItem={addTodoList} nameBtn={nameBtn} />
+      </div>
+      <div className={s.wrapTodo}>
+        {todoLists.map(tl => {
+          const filteredTasks = () => {
+            let filteredTasksArray = tasksObj[tl.id]
+            switch (tl.filter) {
+              case 'active':
+                return filteredTasksArray = filteredTasksArray.filter(t => t.isDone === false)
+              case 'completed':
+                return filteredTasksArray = filteredTasksArray.filter(t => t.isDone === true)
+              default:
+                return filteredTasksArray
+            }
           }
-        }
-        return (
-          <TodoList
-            key={tl.id}
-            id={tl.id}
-            tasks={filteredTasks()}
-            nameTodo={tl.title}
-            nameBtn={nameBtn}
-            addTask={addTask}
-            error={error}
-            setError={setError}
-            removeTask={removeTask}
-            changeStatusTask={changeStatusTask}
-            changeFilteredTasks={changeFilteredTasks}
-            filter={tl.filter}
-            removeTodoList={removeTodoList}
-          />
-        )
-      })}
-      {/* <TodoList
-        tasks={filteredTasks()}
-        nameTodo={nameTodo}
-        nameBtn={nameBtn}
-        addTask={addTask}
-        error={error}
-        setError={setError}
-        removeTask={removeTask}
-        changeStatusTask={changeStatusTask}
-        changeFilteredTasks={changeFilteredTasks}
-        filter={filter}
-      /> */}
+          return (
+            <TodoList
+              key={tl.id}
+              id={tl.id}
+              tasks={filteredTasks()}
+              nameTodo={tl.title}
+              nameBtn={nameBtn}
+              addItem={addTask}
+              removeTask={removeTask}
+              changeStatusTask={changeStatusTask}
+              changeFilteredTasks={changeFilteredTasks}
+              filter={tl.filter}
+              removeTodoList={removeTodoList}
+            />
+          )
+        })}
+
+      </div>
+
     </div>
   );
 }

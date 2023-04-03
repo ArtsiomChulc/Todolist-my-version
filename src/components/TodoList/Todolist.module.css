@@ -23,6 +23,10 @@
 	justify-content: space-between;
 }
 
+.titleTodo button {
+	margin-left: 15px;
+}
+
 .taskList li {
 	list-style: none;
 	display: flex;
@@ -48,18 +52,6 @@
 	flex-direction: column;
 	gap: 10px;
 	flex: 1 1 auto;
-}
-
-.wrapForInputBtn {
-	display: flex;
-	margin: 0 auto;
-	width: 185px;
-	height: 40px;
-}
-
-.errorText {
-	color: red;
-
 }
 
 .btns {

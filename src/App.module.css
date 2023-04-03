@@ -1,0 +1,27 @@
+.app {
+	text-align: center;
+}
+
+.addTodoListInput {
+	width: 100%;
+	margin: 30px auto 30px 60px;
+}
+
+.addTodoListInput input,
+.addTodoListInput button {
+	padding: 10px;
+
+}
+
+.addTodoListInput input {
+	width: 300px;
+}
+
+.addTodoListInput button {
+	width: 80px;
+}
+
+.wrapTodo {
+	display: flex;
+	flex-wrap: wrap;
+}

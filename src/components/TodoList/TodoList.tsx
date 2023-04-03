@@ -7,9 +7,7 @@ type TodoListTypeProps = {
 	tasks: TaskType[]
 	nameTodo: string
 	nameBtn: string
-	addTask: (valueInput: string, todoListId: string) => void
-	error: string
-	setError: (x: string) => void
+	addItem: (valueInput: string, todoListId: string) => void
 	removeTask: (id: string, todoListId: string) => void
 	changeStatusTask: (taskId: string, newIsDone: boolean, todoListId: string) => void
 	changeFilteredTasks: (value: FilterValueTaskType, todoListId: string) => void
@@ -56,6 +54,10 @@ export const TodoList = (props: TodoListTypeProps) => {
 		props.removeTodoList(props.id)
 	}
 
+	const addTask = (valueInput: string) => {
+		props.addItem(valueInput, props.id)
+	}
+
 
 	const styleForBtnsFilterAll = `${s.button} ${props.filter === 'all' ? s.buttonAllColor : ''}`
 	const styleForBtnsFilterCompleted = `${s.button} ${props.filter === 'completed' ? s.buttonCompColor : ''}`
@@ -67,10 +69,8 @@ export const TodoList = (props: TodoListTypeProps) => {
 				{props.nameTodo}
 				<button onClick={removeTodo}>Delete</button>
 			</div>
-			<div className={s.wrapForInputBtn}>
-				<ButtonInput id={props.id} addTask={props.addTask} nameBtn={props.nameBtn} setError={props.setError} error={props.error} />
-			</div>
-			{props.error && <span className={s.errorText}>{props.error}</span>}
+
+			<ButtonInput addItem={addTask} nameBtn={props.nameBtn} />
 
 			<ul className={s.taskList}>
 				{taskList}
