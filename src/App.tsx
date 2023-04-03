@@ -28,8 +28,6 @@ function App() {
   // const nameTodo = 'What to learn?'
   const nameBtn = 'Add'
 
-  // const [error, setError] = useState('')
-
   const todoListsId1 = v1()
   const todoListsId2 = v1()
 
@@ -92,9 +90,9 @@ function App() {
   }
 
   const addTodoList = (valueInput: string) => {
-    const newTodo: TodoListsType = { id: v1(), title: valueInput, filter: "all" }
-    setTodoLists([newTodo, ...todoLists])
-    setTasks({
+    const newTodo: TodoListsType = { id: v1(), title: valueInput, filter: "all" }  //добавляем тодулист
+    setTodoLists([newTodo, ...todoLists]) // сетаем новый тудулист в массив всех тудулистов
+    setTasks({          // сетаем - в объект с тасками новую таску с ключем (айди нового тудулиста) и значением в вмде нового массива
       ...tasksObj,
       [newTodo.id]: []
     })
