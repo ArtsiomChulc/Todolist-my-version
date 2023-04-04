@@ -1,10 +1,10 @@
 import React, { ChangeEvent } from 'react';
-import { FilterValueTaskType, TaskType } from '../../App';
+import { FilterValueTaskType, taskType } from '../../App';
 import { ButtonInput } from './ButtonInput/ButtonInput'
 import s from './Todolist.module.css'
 
 type TodoListTypeProps = {
-	tasks: TaskType[]
+	tasks: taskType[]
 	nameTodo: string
 	nameBtn: string
 	addItem: (valueInput: string, todoListId: string) => void
